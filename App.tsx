@@ -1,3 +1,5 @@
+import React, {useEffect} from 'react';
+
 import Home from './Src/Screens/Home';
 import HomeIcon from './Src/Components/Icons/HomeIcon';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -10,9 +12,10 @@ import NotificationIcon from './Src/Components/Icons/NotificationIcon';
 import Notifications from './Src/Screens/Notifications';
 import Profile from './Src/Screens/Profile';
 import ProfileIcon from './Src/Components/Icons/ProfileIcon';
-import React from 'react';
 import Search from './Src/Screens/Search';
 import SearchIcon from './Src/Components/Icons/SearchIcon';
+import Settings from './Src/Screens/Settings';
+import SettingsIcon from './Src/Components/Icons/SettingsIcon';
 import {StoreContext} from './Src/Stores/store.context';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -26,8 +29,17 @@ export default function App() {
   const {uiStore, authStore} = useContext(StoreContext);
   const theme = uiStore.getTheme();
   const {color, tabIconColor, backgroundColor} = theme;
-  Ionicons.loadFont();
-  MaterialCommunityIcons.loadFont();
+
+  useEffect(() => {
+    async () => {
+      try {
+        Ionicons.loadFont();
+        MaterialCommunityIcons.loadFont();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  }, []);
 
   return (
     <NavigationContainer>
@@ -63,9 +75,28 @@ export default function App() {
                 focused={false}
               />
             ),
+            headerRight: () => (
+              <SettingsIcon iconColor={tabIconColor} navigation={navigation} />
+            ),
           })}
           name="Profile"
           component={Profile}
+        />
+        <Stack.Screen
+          options={({navigation}) => ({
+            headerBackTitle: 'Home',
+            headerStyle: {
+              backgroundColor: backgroundColor,
+            },
+            headerTitleStyle: {
+              color: color,
+            },
+            headerLeft: () => (
+              <ProfileIcon iconColor={tabIconColor} navigation={navigation} />
+            ),
+          })}
+          name="Settings"
+          component={Settings}
         />
       </Stack.Navigator>
     </NavigationContainer>

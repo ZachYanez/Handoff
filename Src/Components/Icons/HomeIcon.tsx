@@ -1,5 +1,6 @@
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import React from 'react';
+import {StyleSheet} from 'react-native';
 
 interface HomeIconProps {
   focused: boolean;
@@ -15,9 +16,8 @@ export default function HomeIcon({
   if (focused === true) {
     return (
       <Ionicons
-        style={{paddingLeft: 8, borderRadius: 12}}
+        style={styles.focusedStyles}
         name="home-outline"
-        // hitSlop={{right: 8, bottom: 8, top: 4}}
         size={24}
         color={iconColor}
       />
@@ -25,7 +25,7 @@ export default function HomeIcon({
   }
   return (
     <Ionicons
-      style={{paddingLeft: 8}}
+      style={styles.blurredStyles}
       name="md-home"
       onPress={() => navigation.navigate('Home')}
       size={24}
@@ -33,3 +33,13 @@ export default function HomeIcon({
     />
   );
 }
+
+const styles = StyleSheet.create({
+  focusedStyles: {
+    paddingLeft: 8,
+    borderRadius: 12,
+  },
+  blurredStyles: {
+    paddingLeft: 8,
+  },
+});

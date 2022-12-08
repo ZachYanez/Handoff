@@ -21,7 +21,7 @@ export default function Login({navigation}: LoginProps) {
   const {backgroundColor, color} = theme;
 
   const LogUserIn = async () => {
-    if (authStore.validateEmail(email) && password != '') {
+    if (authStore.validateEmail(email) && password !== '') {
       if ((await authStore.userExists(email)) === true) {
         navigation.navigate('HomeTabs');
         authStore.setLoginStatus(true);
